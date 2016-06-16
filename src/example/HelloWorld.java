@@ -21,8 +21,7 @@ public class HelloWorld {
     PeriodicParameters periodicParameters = new PeriodicParameters(null,period, null,null,null,null);
 
     /* create periodic thread: */
-    RealtimeThread realtimeThread = new RealtimeThread(priorityParameters,periodicParameters)
-    {
+    RealtimeThread realtimeThread = new RealtimeThread(priorityParameters,periodicParameters){
       public void run()
       {
         for (int n=1;n<50;n++)

@@ -16,6 +16,11 @@ public class Main {
 		final boolean motor3;
 		final boolean motor4;
 		final boolean valvula;
+		float volumeConsumo;
+		int maxNormal;
+		int minNormal;
+		int maxLimite;
+		int minLiminte;
 		
 		/* priority for new thread: mininum+10 */
 	    int priorityTatuacao = PriorityScheduler.instance().getMinPriority()+1;
@@ -100,7 +105,17 @@ public class Main {
 
 	    Tsimulacao.start();
 	    Tcontrole.start();
-	      
-	      
+	       
+	   /* switch(modoOperacao){
+	    	case((caldeira.volumeConsumo == 0) && ((caldeira.maxNormal<=caldeira.nivelAgua) && (caldeira.nivelAgua <= caldeira.minNormal))
+	    			&& (caldeira.isMotor1() && caldeira.isMotor2()&& caldeira.isMotor3() && caldeira.isMotor4()) )
+	    			caldeira.modoOperacao = normalMode;
+	    	case( )
+	    	
+	    	case(/*(caldeira.volumeConsumo !=0) &&(caldeira.nivelAgua>=caldeira.maxLimite)||(caldeira.nivelAgua<=caldeira.minLimite)(caldeira.getNivelAgua(false))
+	    			||(caldeira.getVolumeConsumo(false))||(caldeira.isMotor1(fail))||caldeira.isMotor2(fail)||caldeira.isMotor3(fail)||caldeira.isMotor4(fail)))
+	    			caldeira.modoOperacao = emergencyMode;
+	    	
+	}   */   
 	}
 }

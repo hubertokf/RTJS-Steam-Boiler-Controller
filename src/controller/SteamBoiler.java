@@ -2,16 +2,21 @@ package controller;
 
 public class SteamBoiler {
 	//caldeira de 200L
-	private float nivelAgua;
+	float nivelAgua;
 	private float volumeInsercao = 5;
-	private float volumeConsumo = 2;
+	float volumeConsumo = 2;
 	private float volumeConsumoValvula = 10;
+	int maxNormal = 150;
+	int minNormal = 50;
+	int maxLimite = 175;
+	int minLimite = 25;
 	private boolean motor1;
 	private boolean motor2;
 	private boolean motor3;
 	private boolean motor4;
 	private boolean valvula;
-	
+	private boolean status;
+
 	public SteamBoiler() {
 		this.nivelAgua = 100;
 		this.motor1 = true;
@@ -20,6 +25,7 @@ public class SteamBoiler {
 		this.motor4 = false;
 		this.valvula = false;
 	}
+	
 
 	public void run(){
 		if (this.motor1 == true){
@@ -41,6 +47,14 @@ public class SteamBoiler {
 		this.nivelAgua -= this.volumeConsumo;
 	}
 	
+	public float getVolumeConsumo() {
+		return volumeConsumo;
+	}
+
+	public void setVolumeConsumo(float volumeConsumo) {
+		this.volumeConsumo = volumeConsumo;
+	}
+
 	public boolean isValvula() {
 		return valvula;
 	}
@@ -83,4 +97,64 @@ public class SteamBoiler {
 	public void setMotor4(boolean motor4) {
 		this.motor4 = motor4;
 	}
+	public int getMaxNormal() {
+		return maxNormal;
+	}
+
+	public void setMaxNormal(int maxNormal) {
+		this.maxNormal = maxNormal;
+	}
+
+	public int getMinNormal() {
+		return minNormal;
+	}
+
+	public void setMinNormal(int minNormal) {
+		this.minNormal = minNormal;
+	}
+
+	public int getMaxLimite() {
+		return maxLimite;
+	}
+
+	public void setMaxLimite(int maxLimite) {
+		this.maxLimite = maxLimite;
+	}
+
+	public int getMinLimite() {
+		return minLimite;
+	}
+
+	public void setMinLiminte(int minLimite) {
+		this.minLimite = minLimite;
+	}
+	
 }
+public class Sensor(){/*erro pq?*/
+	private boolean status;
+	private int valor;
+	
+	public Sensor(){
+		this.status=true;
+		this.valor=valor;/*como fazer para pegar o valor que queremos?*/
+		
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public int getValor() {
+		return valor;
+	}
+
+	public void setValor(int valor) {
+		this.valor = valor;
+	}
+	
+}
+

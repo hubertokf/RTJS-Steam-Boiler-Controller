@@ -63,6 +63,7 @@ public class Main {
 					synchronized(caldeira){
 						caldeira.run();
 						System.out.println(caldeira.getNivelAgua());
+						waitForNextPeriod();
 					}
 			}
 	    };
@@ -74,6 +75,7 @@ public class Main {
 							caldeira.setMotor1(false);
 						if (caldeira.getNivelAgua() <= 25)
 							caldeira.setMotor1(true);
+						waitForNextPeriod();
 					}
 				}
 			}

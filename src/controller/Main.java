@@ -75,6 +75,8 @@ public class Main {
 					System.out.println(lastMode);
 					int modo;
 					
+					//pra qual estado vai devido as condições coletadas pelos sensores
+					
 					if (lastMode ==  1 && nivelAgua < 100)
 						modo = 1;
 					else{
@@ -99,6 +101,8 @@ public class Main {
 						caldeira.setModoOperacao(2);
 					}
 					
+					
+					// oque fazer em cada estado
 					switch (modo) {
 						case 1: //inicialização
 							caldeira.setMotor1(true);

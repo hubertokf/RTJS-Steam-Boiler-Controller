@@ -48,7 +48,8 @@ public class SteamBoiler {
 			this.nivelAgua -= this.volumeConsumoValvula;
 		}
 		
-		this.nivelAgua -= this.volumeConsumo;
+		if (this.nivelAgua >= volumeConsumo)
+			this.nivelAgua -= this.volumeConsumo;
 	}
 	
 	public float getVolumeConsumo() {

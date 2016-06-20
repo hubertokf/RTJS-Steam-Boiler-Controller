@@ -72,34 +72,63 @@ public class Main {
 				while (true){
 					System.out.println("Controlando caldeira");
 					int lastMode = caldeira.getModoOperacao();
-					System.out.println(lastMode);
+					System.out.println("MODO Antes: "+lastMode);
 					int modo;
 					
 					//pra qual estado vai devido as condições coletadas pelos sensores
 					
-					if (lastMode ==  1 && nivelAgua < 100)
-						modo = 1;
-					else{
-						modo = 2;
-						caldeira.setModoOperacao(2);
-						//se ja chegou no fim do modo de inicialização
+					switch (lastMode) {
+						case 1: //inicialização
+							if (nivelAgua < 100){
+								modo = 1;
+								caldeira.setModoOperacao(1);
+							}else{
+								modo = 2;
+								caldeira.setModoOperacao(2);
+							}	
+							break;
+						case 2: //normal mode
+							if (nivelAgua > 175 && bomba2==true){
+								caldeira.setModoOperacao(3);
+								modo = 3;
+							}
+							
+							if (nivelAgua < 25 && bomba2==false){
+								modo = 3;
+								caldeira.setModoOperacao(3);
+							}
+							break;
+						case 3: //degraded mode
+							if (nivelAgua < 150 && nivelAgua > 35){
+								caldeira.setValvula(false);
+								caldeira.setMotor3(false);
+								modo = 2;
+								caldeira.setModoOperacao(2);
+							}
+							break;
+						case 4: //rescue mode
+							if (nivelAgua < 150 && nivelAgua > 35){
+								caldeira.setValvula(false);
+								caldeira.setMotor3(false);
+								modo = 2;
+								caldeira.setModoOperacao(2);
+							}
+							break;
+						case 5: //emergency stop mode
+							if (nivelAgua < 150 && nivelAgua > 35){
+								caldeira.setValvula(false);
+								caldeira.setMotor3(false);
+								modo = 2;
+								caldeira.setModoOperacao(2);
+							}
+							break;
+	
+						default:
+							break;
 					}
 					
-					if (lastMode == 2 && nivelAgua > 175 && bomba2==true){ //Se nivel crítico
-						caldeira.setModoOperacao(3);
-						modo = 3;
-					}
-					if (lastMode == 2 && nivelAgua < 25 && bomba2==false){
-						modo = 3;
-						caldeira.setModoOperacao(3);
-					}
-					
-					if (lastMode == 3 && nivelAgua < 150 && nivelAgua > 35){
-						caldeira.setValvula(false);
-						caldeira.setMotor3(false);
-						modo = 2;
-						caldeira.setModoOperacao(2);
-					}
+
+					System.out.println("MODO Depois: "+modo);
 					
 					
 					// oque fazer em cada estado

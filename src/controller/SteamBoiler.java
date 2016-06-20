@@ -5,18 +5,19 @@ public class SteamBoiler {
 	int modoOperacao = 1;
 	
 	float nivelAgua;
-	float maxNormal = 150;
-	float minNormal = 50;
-	float maxLimite = 175;
-	float minLimite = 25;
 	
 	float volumeConsumo = 2;
 	
 	private float volumeInsercao = 5;
+
 	private boolean statusMotor1;
 	private boolean statusMotor2;
 	private boolean statusMotor3;
 	private boolean statusMotor4;
+	
+	private boolean statusSensorNivelAgua = true;
+	private boolean statusSensorVapor = true;
+	private boolean statusSensorValvula = true;
 
 	private float volumeConsumoValvula = 10;
 	private boolean valvula;
@@ -102,37 +103,6 @@ public class SteamBoiler {
 	public void setMotor4(boolean motor4) {
 		this.statusMotor4 = motor4;
 	}
-	public float getMaxNormal() {
-		return maxNormal;
-	}
-
-	public void setMaxNormal(int maxNormal) {
-		this.maxNormal = maxNormal;
-	}
-
-	public float getMinNormal() {
-		return minNormal;
-	}
-
-	public void setMinNormal(int minNormal) {
-		this.minNormal = minNormal;
-	}
-
-	public float getMaxLimite() {
-		return maxLimite;
-	}
-
-	public void setMaxLimite(int maxLimite) {
-		this.maxLimite = maxLimite;
-	}
-
-	public float getMinLimite() {
-		return minLimite;
-	}
-
-	public void setMinLiminte(int minLimite) {
-		this.minLimite = minLimite;
-	}
 	
 
 	public int getModoOperacao() {
@@ -142,6 +112,35 @@ public class SteamBoiler {
 
 	public void setModoOperacao(int modoOperacao) {
 		this.modoOperacao = modoOperacao;
+	}
+	
+	public boolean isStatusSensorNivelAgua() {
+		return statusSensorNivelAgua;
+	}
+
+
+	public void setStatusSensorNivelAgua(boolean statusSensorNivelAgua) {
+		this.statusSensorNivelAgua = statusSensorNivelAgua;
+	}
+
+
+	public boolean isStatusSensorVapor() {
+		return statusSensorVapor;
+	}
+
+
+	public void setStatusSensorVapor(boolean statusSensorVapor) {
+		this.statusSensorVapor = statusSensorVapor;
+	}
+
+
+	public boolean isStatusSensorValvula() {
+		return statusSensorValvula;
+	}
+
+
+	public void setStatusSensorValvula(boolean statusSensorValvula) {
+		this.statusSensorValvula = statusSensorValvula;
 	}
 	
 }

@@ -22,8 +22,6 @@ public class Main {
 	static int minLimite;
 	static int modoOperacao;
 	
-	public static 
-	
 	public static void main(String[] args){		
 		/* priority for new thread: mininum+10 */
 	    int priorityTatuacao = PriorityScheduler.instance().getMinPriority()+1;
@@ -87,17 +85,19 @@ public class Main {
 								}
 								break;
 							case 2: //normal mode
+								if (nivelAgua > 175 && bomba2==true) //Se nivel crítico
+									caldeira.setModoOperacao(3);
+								if (nivelAgua < 25 && bomba2==false)
+									caldeira.setModoOperacao(3);
+								
 								if (nivelAgua >= 175)
 									caldeira.setMotor2(false);
 								if (nivelAgua <= 25)
 									caldeira.setMotor2(true);
-
-								if (nivelAgua >= 175 && bomba2==true) //Se nivel crítico
-									caldeira.setModoOperacao(3);
 								
 								break;
 							case 3: //critical mode
-								if() // se saiu do nivel crítico
+								// se saiu do nivel crítico
 									caldeira.setModoOperacao(2);
 								break;
 	

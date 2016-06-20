@@ -7,21 +7,24 @@ import javax.realtime.RelativeTime;
 import javax.realtime.RealtimeThread;
 
 public class Main {
-	public static void main(String[] args){
-		final SteamBoiler caldeira = new SteamBoiler();
-		
-		float nivelAgua;
-		final boolean motor1;
-		final boolean motor2;
-		final boolean motor3;
-		final boolean motor4;
-		final boolean valvula;
-		float volumeConsumo;
-		int maxNormal;
-		int minNormal;
-		int maxLimite;
-		int minLiminte;
-		
+	private static SteamBoiler caldeira = new SteamBoiler();
+	
+	static float nivelAgua;
+	static boolean bomba1;
+	static boolean bomba2;
+	static boolean bomba3;
+	static boolean bomba4;
+	static boolean valvula;
+	static float volumeConsumo;
+	static int maxNormal;
+	static int minNormal;
+	static int maxLimite;
+	static int minLimite;
+	static int modoOperacao;
+	
+	public static 
+	
+	public static void main(String[] args){		
 		/* priority for new thread: mininum+10 */
 	    int priorityTatuacao = PriorityScheduler.instance().getMinPriority()+1;
 	    PriorityParameters priorityParametersTatuacao = new PriorityParameters(priorityTatuacao);
@@ -71,21 +74,59 @@ public class Main {
 			public void run(){
 				while (true){
 					synchronized(caldeira){
-						if (caldeira.getNivelAgua() >= 175)
-							caldeira.setMotor1(false);
-						if (caldeira.getNivelAgua() <= 25)
-							caldeira.setMotor1(true);
+						int lastMode = caldeira.getModoOperacao();
+						
+						switch (lastMode) {
+							case 1: //inicialização
+								if (nivelAgua < 100){
+									caldeira.setMotor1(true);
+									caldeira.setMotor2(true);			
+								//se ja chegou no fim do modo de inicialização
+								}else{
+									caldeira.setModoOperacao(2);
+								}
+								break;
+							case 2: //normal mode
+								if (nivelAgua >= 175)
+									caldeira.setMotor2(false);
+								if (nivelAgua <= 25)
+									caldeira.setMotor2(true);
+
+								if (nivelAgua >= 175 && bomba2==true) //Se nivel crítico
+									caldeira.setModoOperacao(3);
+								
+								break;
+							case 3: //critical mode
+								if() // se saiu do nivel crítico
+									caldeira.setModoOperacao(2);
+								break;
+	
+							default:
+								break;
+						}
 						waitForNextPeriod();
 					}
 				}
 			}
 	    };
 	    
-	    /*RealtimeThread TsensorAgua= new RealtimeThread(priorityParametersTsensorAgua,periodicParametersTsensorAgua){
+	    RealtimeThread TsensorAgua= new RealtimeThread(priorityParametersTsensorAgua,periodicParametersTsensorAgua){
 			public void run(){
 				while (true){
 					synchronized(caldeira){
 						nivelAgua = caldeira.getNivelAgua();
+						waitForNextPeriod();
+					}
+				}
+			}
+	    };
+	    
+	    RealtimeThread TsensorVapor= new RealtimeThread(priorityParametersTsensorVapor,periodicParametersTsensorVapor){
+			public void run(){
+				while (true){
+					synchronized(caldeira){
+						volumeConsumo = caldeira.getVolumeConsumo();
+						waitForNextPeriod();
 					}
 				}
 			}
@@ -95,29 +136,33 @@ public class Main {
 			public void run(){
 				while (true){
 					synchronized(caldeira){
-						 bomba1 = caldeira.isMotor1();
-						 bomba2 = caldeira.isMotor2();
-						 bomba3 = caldeira.isMotor3();
-						 bomba4 = caldeira.isMotor4();
+						bomba1 = caldeira.isMotor1();
+						bomba2 = caldeira.isMotor2();
+						bomba3 = caldeira.isMotor3();
+						bomba4 = caldeira.isMotor4();
+						waitForNextPeriod();
 					}
 				}
 			}
-	    };*/
+	    };
 	    
 
 	    Tsimulacao.start();
 	    Tcontrole.start();
-	       
-	   /* switch(modoOperacao){
-	    	case((caldeira.volumeConsumo == 0) && ((caldeira.maxNormal<=caldeira.nivelAgua) && (caldeira.nivelAgua <= caldeira.minNormal))
-	    			&& (caldeira.isMotor1() && caldeira.isMotor2()&& caldeira.isMotor3() && caldeira.isMotor4()) )
-	    			caldeira.modoOperacao = normalMode;
-	    	case( )
-	    	
-	    	case(/*(caldeira.volumeConsumo !=0) &&(caldeira.nivelAgua>=caldeira.maxLimite)||(caldeira.nivelAgua<=caldeira.minLimite)(caldeira.getNivelAgua(false))
-	    			||(caldeira.getVolumeConsumo(false))||(caldeira.isMotor1(fail))||caldeira.isMotor2(fail)||caldeira.isMotor3(fail)||caldeira.isMotor4(fail)))
-	    			caldeira.modoOperacao = emergencyMode;
-	    	
-	}   */   
+	    TsensorAgua.start();
+	    TsensorBomba.start();
+	    TsensorVapor.start();
+	    
+	    /* switch(modoOperacao){
+    	case((caldeira.volumeConsumo == 0) && ((caldeira.maxNormal<=caldeira.nivelAgua) && (caldeira.nivelAgua <= caldeira.minNormal))
+    			&& (caldeira.isMotor1() && caldeira.isMotor2()&& caldeira.isMotor3() && caldeira.isMotor4()) )
+    			caldeira.modoOperacao = normalMode;
+    	case( )
+    	
+    	case(/*(caldeira.volumeConsumo !=0) &&(caldeira.nivelAgua>=caldeira.maxLimite)||(caldeira.nivelAgua<=caldeira.minLimite)(caldeira.getNivelAgua(false))
+    			||(caldeira.getVolumeConsumo(false))||(caldeira.isMotor1(fail))||caldeira.isMotor2(fail)||caldeira.isMotor3(fail)||caldeira.isMotor4(fail)))
+    			caldeira.modoOperacao = emergencyMode;
+    	
+}   */
 	}
 }

@@ -3,11 +3,12 @@ package controller;
 public class Sensor {
 	
 		private boolean status;
-		private int valor;
+		private float valor;
 		
-		public Sensor(){
+		public Sensor(float valor){
 			this.status=true;
-			this.valor=valor;/*como fazer para pegar o valor que queremos?*/
+			this.valor=valor;
+			/*como fazer para pegar o valor que queremos?*/
 			
 		}
 
@@ -19,13 +20,11 @@ public class Sensor {
 			this.status = status;
 		}
 
-		public int getValor() {
+		public float getValor() {
 			return valor;
 		}
 
 		public void setValor(int valor) {
 			this.valor = valor;
 		}
-		
-	}
 }
